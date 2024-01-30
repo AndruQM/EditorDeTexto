@@ -7,20 +7,20 @@ public class Principal {
 		DimencionesEditor marco=new DimencionesEditor();
 		marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		marco.setVisible(true);
-        System.out.println("prueba con git");
+        System.out.println("segunda prueba");
 	}
 }
 	class DimencionesEditor extends JFrame{
 		public DimencionesEditor() {
 			setBounds(100,100,500,500);
-			setTitle("Editor Personalizado");
+			setTitle("Editor Personalizado AndruQM");
 			add(new Panel());
 		}
 		
 	}
 	class Panel extends JPanel{
 		public Panel() {
-			JLabel etiqueta= new JLabel("HOLA MUNDO");
+			JLabel etiqueta= new JLabel("editor de texto personalizado echo por mi");
 			add(etiqueta);
 		}
 		
