@@ -7,6 +7,7 @@ public class Principal {
 		DimencionesEditor marco=new DimencionesEditor();
 		marco.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		marco.setVisible(true);
+        System.out.println("prueba con git");
 	}
 }
 	class DimencionesEditor extends JFrame{
