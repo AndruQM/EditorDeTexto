@@ -1,5 +1,6 @@
 package editor;
 
+import java.awt.event.*;
 import javax.swing.*;
 
 public class Principal {
@@ -12,7 +13,7 @@ public class Principal {
 }
 	class DimencionesEditor extends JFrame{
 		public DimencionesEditor() {
-			setBounds(500,100,500,500);
+			setBounds(100,100,100,100);
 			setTitle("Editor Personalizado AndruQM");
 			add(new Panel());
 		}
@@ -43,12 +44,14 @@ public class Principal {
 			//items Archivos
 			crearItem("Nuevo Archivo", "archivo", "nuevo");
 			crearItem("Abrir Archivo", "archivo", "abrir");
-			crearItem("Guardar", "archivo", "guardar");
+			archivo.addSeparator();
+			crearItem("Guardar",   "archivo", "guardar");
 			crearItem("Guardar Como", "archivo", "guardar como");
 
 			//items Editar
 			crearItem("Deshacer", "editar", "");
 			crearItem("Rehacer", "editar", "");
+			editar.addSeparator();
 			crearItem("Deshacer", "editar", "");
 			crearItem("Cortar", "editar", "");
 			crearItem("Copiar", "editar", "");
@@ -71,7 +74,7 @@ public class Principal {
 			//---------------area de texto------------------
 			tPane=new JTabbedPane();
 			//----------------------------------------------
-			crearPlanel();
+			// crearPlanel();
 			add(panelMenu);
 			add(tPane);
 			
@@ -84,9 +87,20 @@ public class Principal {
 			tPane.addTab("title", ventana);
 		}
 		public void crearItem(String rotulo, String menu, String accion){
-			elementItem=new JMenuItem(rotulo);
+			elementItem = new JMenuItem(rotulo);
 			if (menu.equals("archivo")) {
 				archivo.add(elementItem);
+				if (accion.equals("nuevo")) {
+					elementItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							crearPlanel();
+						}
+						
+					});
+				}
 			} else if (menu.equals("editar")) {
 				editar.add(elementItem);
 			}else if (menu.equals("seleccionar")) {
