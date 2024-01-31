@@ -1,6 +1,11 @@
 package editor;
 
+import java.awt.ScrollPane;
 import java.awt.event.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.*;
+
 import javax.swing.*;
 
 public class Principal {
@@ -13,7 +18,7 @@ public class Principal {
 }
 	class DimencionesEditor extends JFrame{
 		public DimencionesEditor() {
-			setBounds(100,100,100,100);
+			setBounds(100,100,500,500);
 			setTitle("Editor Personalizado AndruQM");
 			add(new Panel());
 		}
@@ -21,11 +26,16 @@ public class Principal {
 	}
 	class Panel extends JPanel{
 		private JTabbedPane tPane ;
-		private JTabbedPane ventana ;
-		private JTextArea areaDeTexto;
+		private JPanel ventana ;
+		// private JTextArea areaDeTexto;
 		private JMenuBar menu;
 		private JMenu archivo, editar, seleccionar, ver, apariencia;
 		private JMenuItem elementItem;
+		private ArrayList<JTextPane> listAreaTexto;
+		private ArrayList<File> listFile;
+		private ArrayList<JScrollPane> listScroll;
+		private int controladorPane =0;
+		private boolean existePane = false;
 		public Panel() {
 			//-------------------MENU---------------------------
 			JPanel panelMenu =new JPanel();
@@ -73,6 +83,9 @@ public class Principal {
 			add(etiqueta);*/
 			//---------------area de texto------------------
 			tPane=new JTabbedPane();
+			listFile = new ArrayList<File>();
+			listAreaTexto = new ArrayList<JTextPane>();
+			listScroll = new ArrayList<JScrollPane>();
 			//----------------------------------------------
 			// crearPlanel();
 			add(panelMenu);
@@ -81,10 +94,16 @@ public class Principal {
 
 		}
 		public void crearPlanel(){
-			ventana = new JTabbedPane();
-			areaDeTexto = new JTextArea();
-			ventana.add(areaDeTexto);
+			ventana = new JPanel();
+			listFile.add(new File(""));	
+			listAreaTexto.add(new JTextPane());
+			listScroll.add(new JScrollPane(listAreaTexto.get(controladorPane)));
+
+			ventana.add(listScroll.get(controladorPane));
 			tPane.addTab("title", ventana);
+			tPane.setSelectedIndex(controladorPane);
+			controladorPane++;
+			existePane=true;
 		}
 		public void crearItem(String rotulo, String menu, String accion){
 			elementItem = new JMenuItem(rotulo);
@@ -92,13 +111,25 @@ public class Principal {
 				archivo.add(elementItem);
 				if (accion.equals("nuevo")) {
 					elementItem.addActionListener(new ActionListener() {
-
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							// TODO Auto-generated method stub
 							crearPlanel();
 						}
-						
+					});
+				}else if (accion.equals("abrir")) {
+					elementItem.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							System.out.println("Abrir Archivo");
+							crearPlanel();
+							JFileChooser selectorArchivo= new JFileChooser();
+							selectorArchivo.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+							selectorArchivo.showOpenDialog(listAreaTexto.get(tPane.getSelectedIndex()));
+						}
+							
 					});
 				}
 			} else if (menu.equals("editar")) {
